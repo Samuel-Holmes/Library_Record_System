@@ -1,6 +1,6 @@
 # Library_Record_System
 
-## Video Demonstration Found in the Video's Folder of the Repository
+## Video Demonstration Found in the Video Folder of the Repository
 
 ### Overview
 
