@@ -36,7 +36,7 @@ Navigate to the project directory and run the script:
 
 python library_system.py
 
-How to Use
+## How to Use:
 
 Run the script.
 
