@@ -1,11 +1,11 @@
 # Import necessary libraries 
 import uuid
 import re
-from datetime import datetime, timedelta
+from datetime import datetime
 
 # Regular expressions for validation
-reg_name = "^[a-zA-Z]+$"
-reg_email = "^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+reg_name = r"^[a-zA-Z]+$"
+reg_email = r"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$" 
 
 # Books class
 class Books:
