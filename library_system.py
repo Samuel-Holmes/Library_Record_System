@@ -150,3 +150,6 @@ def lib_loop():
             break
         else:
             print("Invalid choice, please enter a number between 1-4")
+
+
+lib_loop()
