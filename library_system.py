@@ -1,11 +1,9 @@
-# Import necessary libraries 
 import uuid
 import re
 from datetime import datetime
 
 # Regular expressions for validation
-reg_name = r"^[a-zA-Z]+$"
-reg_email = r"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$" 
+reg_email = r"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
 
 # Books class
 class Books:
@@ -42,15 +40,22 @@ class Users:
         self.dateofbirth = dateofbirth
 
     def update_details(self):
-        self.firstname = input("Enter new first name: ").strip() or self.firstname
-        self.surname = input("Enter new surname: ").strip() or self.surname
-        self.housenumber = input("Enter new house number: ").strip() or self.housenumber
-        self.streetname = input("Enter new street name: ").strip() or self.streetname
-        self.postcode = input("Enter new postcode: ").strip() or self.postcode
-        email = input("Enter new email address: ").strip()
+        self.firstname = input("Enter new first name (or 'q' to exit): ").strip() or self.firstname
+        if self.firstname.lower() == 'q': return
+        self.surname = input("Enter new surname (or 'q' to exit): ").strip() or self.surname
+        if self.surname.lower() == 'q': return
+        self.housenumber = input("Enter new house number (or 'q' to exit): ").strip() or self.housenumber
+        if self.housenumber.lower() == 'q': return
+        self.streetname = input("Enter new street name (or 'q' to exit): ").strip() or self.streetname
+        if self.streetname.lower() == 'q': return
+        self.postcode = input("Enter new postcode (or 'q' to exit): ").strip() or self.postcode
+        if self.postcode.lower() == 'q': return
+        email = input("Enter new email address (or 'q' to exit): ").strip()
+        if email.lower() == 'q': return
         if re.match(reg_email, email):
             self.emailaddress = email
-        date_of_birth = input("Enter new date of birth (DD/MM/YYYY): ").strip()
+        date_of_birth = input("Enter new date of birth (DD/MM/YYYY) (or 'q' to exit): ").strip()
+        if date_of_birth.lower() == 'q': return
         try:
             self.dateofbirth = datetime.strptime(date_of_birth, "%d/%m/%Y")
         except ValueError:
@@ -62,16 +67,23 @@ class UserList:
         self.user_list = {}
     
     def add_user(self):
-        username = input("Enter username: ").strip()
+        username = input("Enter username (or 'q' to exit): ").strip()
         if username.lower() == 'q':
             return
-        firstname = input("Enter first name: ").strip()
-        surname = input("Enter surname: ").strip()
-        housenumber = input("Enter house number: ").strip()
-        streetname = input("Enter street name: ").strip()
-        postcode = input("Enter postcode: ").strip()
-        emailaddress = input("Enter email address: ").strip()
-        dateofbirth = input("Enter date of birth (DD/MM/YYYY): ").strip()
+        firstname = input("Enter first name (or 'q' to exit): ").strip()
+        if firstname.lower() == 'q': return
+        surname = input("Enter surname (or 'q' to exit): ").strip()
+        if surname.lower() == 'q': return
+        housenumber = input("Enter house number (or 'q' to exit): ").strip()
+        if housenumber.lower() == 'q': return
+        streetname = input("Enter street name (or 'q' to exit): ").strip()
+        if streetname.lower() == 'q': return
+        postcode = input("Enter postcode (or 'q' to exit): ").strip()
+        if postcode.lower() == 'q': return
+        emailaddress = input("Enter email address (or 'q' to exit): ").strip()
+        if emailaddress.lower() == 'q': return
+        dateofbirth = input("Enter date of birth (DD/MM/YYYY) (or 'q' to exit): ").strip()
+        if dateofbirth.lower() == 'q': return
         try:
             dateofbirth = datetime.strptime(dateofbirth, "%d/%m/%Y")
         except ValueError:
@@ -82,8 +94,6 @@ class UserList:
         print("User added successfully")
 
     def update_user(self, username):
-        if username.lower() == 'q':
-            return
         user = self.user_list.get(username)
         if user:
             user.update_details()
@@ -111,24 +121,18 @@ def lib_loop():
             break
 
         if choice == '1':
-            title = input("Enter the book's title: ").strip()
-            if title.lower() == 'q':
-                continue
-            author = input("Enter the author's name: ").strip()
-            if author.lower() == 'q':
-                continue
-            year = input("Enter the book's year: ").strip()
-            if year.lower() == 'q':
-                continue
-            publisher = input("Enter the book's publisher: ").strip()
-            if publisher.lower() == 'q':
-                continue
-            availableCopies = input("Enter the number of available copies: ").strip()
-            if availableCopies.lower() == 'q':
-                continue
-            publicationDate = input("Enter the publication date: ").strip()
-            if publicationDate.lower() == 'q':
-                continue
+            title = input("Enter the book's title (or 'q' to exit): ").strip()
+            if title.lower() == 'q': continue
+            author = input("Enter the author's name (or 'q' to exit): ").strip()
+            if author.lower() == 'q': continue
+            year = input("Enter the book's year (or 'q' to exit): ").strip()
+            if year.lower() == 'q': continue
+            publisher = input("Enter the book's publisher (or 'q' to exit): ").strip()
+            if publisher.lower() == 'q': continue
+            availableCopies = input("Enter the number of available copies (or 'q' to exit): ").strip()
+            if availableCopies.lower() == 'q': continue
+            publicationDate = input("Enter the publication date (or 'q' to exit): ").strip()
+            if publicationDate.lower() == 'q': continue
             book = Books(title, author, year, publisher, availableCopies, publicationDate)
             book_list.add_book_to_collection(book)
             print("Book added successfully")
@@ -137,9 +141,8 @@ def lib_loop():
             user_list.add_user()
         
         elif choice == '3':
-            username = input("Enter the username to update: ").strip()
-            if username.lower() == 'q':
-                continue
+            username = input("Enter the username to update (or 'q' to exit): ").strip()
+            if username.lower() == 'q': continue
             user_list.update_user(username)
         
         elif choice == '4':
@@ -147,6 +150,3 @@ def lib_loop():
             break
         else:
             print("Invalid choice, please enter a number between 1-4")
-
-# Run the loop
-lib_loop()
