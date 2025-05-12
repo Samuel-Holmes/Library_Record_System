@@ -43,7 +43,7 @@ class Book:
         self.publisher = publisher
         self.availableCopies = int(availableCopies)
         self.publicationDate = publicationDate
-        self.borrowed_by = {}  # username -> due_date
+        self.borrowed_by = {}  
 
 # BookList class
 class BookList:
@@ -57,7 +57,11 @@ class BookList:
             raise ValueError("Invalid book object")
 
     def find_book_by_title(self, title):
-        return [b for b in self.book_list.values() if title.lower() in b.title.lower()]
+        matched_books = []
+        for book in self.book_list.values():
+            if title.lower() in book.title.lower():
+                matched_books.append(book)
+            return matched_books
 
     def list_books(self):
         for book in self.book_list.values():
