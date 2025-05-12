@@ -104,28 +104,50 @@ class User:
 
     def update_details(self):
         new_firstname = get_input("Enter new first name (or 'q' to exit): ")
-        if new_firstname:
-            self.firstname = new_firstname
-        new_surname = get_input("Enter new surname (or 'q' to exit): ")
-        if new_surname:
-            self.surname = new_surname
-        new_housenumber = get_input("Enter new house number (or 'q' to exit): ")
-        if new_housenumber:
-            self.housenumber = new_housenumber
-        new_streetname = get_input("Enter new street name (or 'q' to exit): ")
-        if new_streetname:
-            self.streetname = new_streetname
-        new_postcode = get_input("Enter new postcode (or 'q' to exit): ")
-        if new_postcode:
-            self.postcode = new_postcode
-        email = get_input("Enter new email address (or 'q' to exit): ", is_valid_email)
-        if email:
-            self.emailaddress = email
-        date_str = get_input("Enter new date of birth (DD/MM/YYYY) (or 'q' to exit): ")
-        if date_str:
-            dob = parse_date(date_str)
-            if dob:
-                self.dateofbirth = dob
+    if new_firstname is None:
+        print("Update cancelled.")
+        return
+    self.firstname = new_firstname
+
+    new_surname = get_input("Enter new surname (or 'q' to exit): ")
+    if new_surname is None:
+        print("Update cancelled.")
+        return
+    self.surname = new_surname
+
+    new_housenumber = get_input("Enter new house number (or 'q' to exit): ")
+    if new_housenumber is None:
+        print("Update cancelled.")
+        return
+    self.housenumber = new_housenumber
+
+    new_streetname = get_input("Enter new street name (or 'q' to exit): ")
+    if new_streetname is None:
+        print("Update cancelled.")
+        return
+    self.streetname = new_streetname
+
+    new_postcode = get_input("Enter new postcode (or 'q' to exit): ")
+    if new_postcode is None:
+        print("Update cancelled.")
+        return
+    self.postcode = new_postcode
+
+    email = get_input("Enter new email address (or 'q' to exit): ", is_valid_email)
+    if email is None:
+        print("Update cancelled.")
+        return
+    self.emailaddress = email
+
+    date_str = get_input("Enter new date of birth (DD/MM/YYYY) (or 'q' to exit): ")
+    if date_str is None:
+        print("Update cancelled.")
+        return
+    dob = parse_date(date_str)
+    if dob:
+        self.dateofbirth = dob
+    else:
+        print("Invalid date format. Date of birth not updated.")
 
 # UserList class
 class UserList:
