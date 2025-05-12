@@ -1,85 +1,90 @@
-# Library_Record_System
 
-## Video Demonstration Found in the Video Folder of the Repository
+# 📚 Library System (Terminal-Based)
 
-### Overview
+A simple, beginner-friendly Python terminal application for managing a basic library. It allows you to add books and users, borrow and return books, and update user information.
 
-The Library System is a simple command-line application designed to manage books and users within a library. It allows librarians or users to add books to the collection, register new users, and update user details. The program provides an interactive menu to navigate different functionalities easily.
+---
 
-### Features
+## 🏗️ Features
 
-Add Books: Users can add books to the collection by providing relevant details such as title, author, year, publisher, available copies, and publication date.
+- Add and list books
+- Add and list users
+- Borrow and return books (with due date and late return warning)
+- Update user details
+- Input validation for dates, emails, and numbers
+- Simple, interactive menu-driven interface
 
-Add Users: Users can be registered by entering their personal information such as name, address, email, and date of birth.
+---
 
-Update User Details: Registered users can update their personal information.
+## ▶️ How to Run
 
-Exit Anytime: Users can exit the system or any prompt by entering 'q'.
+Make sure you have Python 3 installed, then run:
 
-### Technologies Used
-
-Python 3: The entire application is written in Python.
-
-UUID: Used to generate unique book IDs.
-
-Regex (re): Used for validating email addresses.
-
-Datetime: Used for handling date inputs.
-
-### Installation & Setup
-
-Ensure you have Python 3 installed on your system.
-
-Download or clone the repository.
-
-Navigate to the project directory and run the script:
-
+```bash
 python library_system.py
+```
 
-## How to Use:
+Follow the terminal prompts to interact with the system.
 
-Run the script.
+---
 
-Choose an option from the menu:
+## 🧩 Main Menu Options
 
-Press 1 to add a book.
+| Option | Description                         |
+|--------|-------------------------------------|
+| 1      | Add a new book                      |
+| 2      | Add a new user                      |
+| 3      | Update an existing user's details   |
+| 4      | List all books                      |
+| 5      | List all users                      |
+| 6      | Borrow a book                       |
+| 7      | Return a borrowed book              |
+| 8      | Exit the system                     |
 
-Press 2 to add a new user.
+---
 
-Press 3 to update user details.
+## 📦 Classes Overview
 
-Press 4 to exit the system.
+### `Book`
+Represents a book in the library.
 
-Follow the prompts to enter the required details.
+- `bookID`: Unique ID (UUID)
+- `title`, `author`, `year`, `publisher`, `availableCopies`, `publicationDate`
+- `borrowed_by`: Dictionary tracking borrowed status (`username` → `due_date`)
 
-At any point, you can enter 'q' to exit a prompt or the system.
+### `BookList`
+Manages the collection of books.
 
-### Example Usage
+- `add_book_to_collection(book)`
+- `list_books()`
+- `find_book_by_title(title)`
+- `borrow_book(book_id, username)`
+- `return_book(book_id, username)`
 
-Welcome to the library system:
-1. Add a book
-2. Add a user
-3. Update user details
-4. Exit system
-(Press 'q' at any point to exit a prompt)
-Please select an option 1-4: 2
-Enter username: john_doe
-Enter first name: John
-Enter surname: Doe
-Enter house number: 123
-Enter street name: Library St
-Enter postcode: AB12 3CD
-Enter email address: johndoe@example.com
-Enter date of birth (DD/MM/YYYY): 15/06/1990
-User added successfully!
+### `User`
+Represents a library user.
 
+- Includes personal details and date of birth
+- `update_details()` to interactively update the user
 
-### Future Enhancements
+### `UserList`
+Manages the collection of users.
 
-Implement book borrowing and returning functionality.
+- `add_user()`
+- `update_user(username)`
+- `list_users()`
 
-Add persistent storage using a database or file system.
+---
 
-Improve validation and error handling.
+## 🔐 Input Validation
 
-Implement a graphical user interface (GUI).
+- Email is validated with a regex.
+- Dates must follow `DD/MM/YYYY` format.
+- Year and copy count must be numeric.
+
+---
+
+## 💡 Tips
+
+- Enter `'q'` during any prompt to cancel that operation.
+- Book IDs are shown when books are listed—keep them handy for borrow/return.
