@@ -58,7 +58,7 @@ class Book:
             "year" : self.year,
             "publisher": self.publisher, 
             "availableCopies" : self.availableCopies, 
-            "publicationDate" : self.publicationDate,
+            "publicationDate" : str(self.publicationDate),
             "borrowed_by" : self.borrowed_by
         }
          
@@ -238,6 +238,9 @@ def lib_loop():
         choice = input("Select an option 1-8: ").strip()
 
         if choice == '1':
+            
+            # creating the new book object getting user input 
+            
             title = get_input("Enter book title: ")
             author = get_input("Enter author name: ")
             year = get_input("Enter year of publication: ", is_digit)
@@ -249,12 +252,20 @@ def lib_loop():
                 print("Invalid publication date.")
                 continue
             book = Book(title, author, year, publisher, copies, pub_date)
+
+            
+            # converting the book object to dictionary using created method and appending to the data dictionary (json object to python dictionary)
+            
             book_dict = book.to_dict()
             data["Books"].append(book_dict)
             
+            # writing updated data to the json file 
+
             with open('data.json', 'w') as f:
                 json.dump(data, f, indent=2)
             
+            # adding book to the booklist
+
             book_list.add_book_to_collection(book)
             print("Book added successfully")
 

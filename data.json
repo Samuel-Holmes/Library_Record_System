@@ -1,19 +1,7 @@
-{   
-    "Booklist":[
-
-    ],
-
-    "Books":[
-        
-    ],
-
-    "Userlist":[
-
-    ],
-
-    "Users":[
-
-    ]
-
-    
+{
+  "Booklist": [],
+  "Books": [
+  ],
+  "Userlist": [],
+  "Users": []
 }
