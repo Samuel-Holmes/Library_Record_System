@@ -48,7 +48,20 @@ class Book:
         self.publisher = publisher
         self.availableCopies = int(availableCopies)
         self.publicationDate = publicationDate
-        self.borrowed_by = {}  
+        self.borrowed_by = {}
+
+    def to_dict(self):
+        return {
+            "bookID" : self.bookID,
+            "title": self.title,
+            "author" : self.author, 
+            "year" : self.year,
+            "publisher": self.publisher, 
+            "availableCopies" : self.availableCopies, 
+            "publicationDate" : self.publicationDate,
+            "borrowed_by" : self.borrowed_by
+        }
+         
 
 # BookList class
 class BookList:
