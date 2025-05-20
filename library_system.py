@@ -8,7 +8,7 @@ reg_email = r"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(
 # opening and loading json file
 
 with open("data.json", "r") as f:
-    data = json.load(f)
+    data = json.load(f) 
 
 # Utility functions
 def get_input(prompt, validator=None, cast_type=str):
@@ -249,8 +249,15 @@ def lib_loop():
                 print("Invalid publication date.")
                 continue
             book = Book(title, author, year, publisher, copies, pub_date)
+            book_dict = book.to_dict()
+            data["Books"].append(book_dict)
+            
+            with open('data.json', 'w') as f:
+                json.dump(data, f, indent=2)
+            
             book_list.add_book_to_collection(book)
             print("Book added successfully")
+
 
         elif choice == '2':
             user_list.add_user()
