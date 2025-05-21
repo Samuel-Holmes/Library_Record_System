@@ -5,6 +5,9 @@ from datetime import datetime, timedelta
 
 reg_email = r"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
 
+with open("data.json", "r") as f:
+    data = load(f)
+
 # opening and loading json file
 
 with open("data.json", "r") as f:
