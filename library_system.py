@@ -1,7 +1,9 @@
 """
 BOOK OBJECTS
 
-check year entry currently allows singular number to be entered. Enforce a level of length validation 
+check year entry currently allows singular number to be entered. Enforce a level of length validation
+
+validate that book does not already exist in the collection check against details such as title and publication date. This accounts for new editions of books also. 
 
 BOOKLIST
 
@@ -9,17 +11,17 @@ add books to booklist in the json file when book object created
 
 ** enhancing borrow and return book methods **
     
-    when borrowing books check username against the user list in the json file (check is instance)
+    when borrowing books check username against the user list in the json file (check is instance).
 
-    allow to borrow and make sure to update borrowed by in book object, decrement the copies
+    allow to borrow and make sure to update borrowed by in book object, decrement the copies.
 
-    set same for returning books, remove them from borrowed by, increment the copies 
+    set same for returning books, remove them from borrowed by, increment the copies. 
 
 USER
 
-add users to the json file only if they do not already exist
+add users to the json file only if they do not already exist.
 
-add users to the userlist once they have passed this check 
+add users to the userlist once they have passed this check. 
 
 """  
 
