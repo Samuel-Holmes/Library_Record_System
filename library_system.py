@@ -3,25 +3,19 @@ BOOKLIST
 
 add books to booklist in the json file when book object created
 
-when borrowing books check username against the user list in the json file (check is instance)
+** enhancing borrow and return book methods **
+    
+    when borrowing books check username against the user list in the json file (check is instance)
 
-allow to borrow and make sure to update borrowed by in book object, decrement the copies
+    allow to borrow and make sure to update borrowed by in book object, decrement the copies
 
-set same for returning books, remove them from borrowed by, increment the copies 
-
+    set same for returning books, remove them from borrowed by, increment the copies 
 
 USER
 
 add users to the json file only if they do not already exist
 
 add users to the userlist once they have passed this check 
-
-when borrowing books check username against the user list in the json file (check is instance)
-
-allow to borrow and make sure to update borrowed by in book object, decrement the copies
-
-set same for returning books, remove them from borrowed by, increment the copies 
-
 
 """  
 
