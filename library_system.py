@@ -1,21 +1,27 @@
-import uuid
-import re
-import json 
-from datetime import datetime, timedelta
+# importation of libraries used for the programme use cases commented next to each 
+
+import uuid                                                  # creation of unique identifiers for each book object 
+import re                                                    # used to match inputs to the regular expression format for validation purposes
+import json                                                  # used as data storage for interaction with the json file 
+from datetime import datetime, timedelta                     # used for date validation along with time changes for due dates 
+
+
+
+
+# regular expression for email validation 
 
 reg_email = r"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
 
-with open("data.json", "r") as f:
-    data = load(f)
 
 # opening and loading json file
 
-# test commit
-
 with open("data.json", "r") as f:
-    data = json.load(f) 
+    data = json.load(f)
+
+
 
 # Utility functions
+
 def get_input(prompt, validator=None, cast_type=str):
     while True:
         value = input(prompt).strip()
@@ -43,7 +49,9 @@ def parse_date(date_str):
     except ValueError:
         return None
 
+
 # Book class
+
 class Book:
     def __init__(self, title, author, year, publisher, availableCopies, publicationDate):
         self.bookID = str(uuid.uuid4())
@@ -68,7 +76,9 @@ class Book:
         }
          
 
+
 # BookList class
+
 class BookList:
     def __init__(self):
         self.book_list = {}
@@ -113,7 +123,9 @@ class BookList:
         else:
             print("No record of this book being borrowed by you.")
 
+
 # User class
+
 class User:
     def __init__(self, username, firstname, surname, housenumber, streetname, postcode, emailaddress, dateofbirth):
         self.username = username
@@ -187,7 +199,9 @@ class User:
             print("Invalid date format. Date of birth not updated.")
 
 
+
 # UserList class
+
 class UserList:
     def __init__(self):
         self.user_list = {}
@@ -224,7 +238,9 @@ class UserList:
         for user in self.user_list.values():
             print(f"{user.username}: {user.firstname} {user.surname}")
 
+
 # Main loop
+
 def lib_loop():
     book_list = BookList()
     user_list = UserList()
@@ -251,12 +267,18 @@ def lib_loop():
             year = get_input("Enter year of publication: ", is_digit)
             publisher = get_input("Enter publisher: ")
             copies = get_input("Enter number of copies: ", is_digit)
+            
             pub_date_str = get_input("Enter publication date (DD/MM/YYYY): ")
-            pub_date = parse_date(pub_date_str)
+            pub_date = parse_date(pub_date_str) 
+            
             if not pub_date:
                 print("Invalid publication date.")
                 continue
-            book = Book(title, author, year, publisher, copies, pub_date)
+            
+            else:
+                date_only = pub_date.date()
+                formatted_date_only = date_only.strftime("%d/%m/%Y")
+                book = Book(title, author, year, publisher, copies, formatted_date_only)
 
             
             # converting the book object to dictionary using created method and appending to the data dictionary (json object to python dictionary)
