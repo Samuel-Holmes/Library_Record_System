@@ -10,6 +10,8 @@ with open("data.json", "r") as f:
 
 # opening and loading json file
 
+# test commit
+
 with open("data.json", "r") as f:
     data = json.load(f) 
 
