@@ -1,4 +1,8 @@
 """
+BOOK OBJECTS
+
+check year entry currently allows singular number to be entered. Enforce a level of length validation 
+
 BOOKLIST
 
 add books to booklist in the json file when book object created
