@@ -1,10 +1,41 @@
+"""
+BOOKLIST
+
+add books to booklist in the json file when book object created
+
+when borrowing books check username against the user list in the json file (check is instance)
+
+allow to borrow and make sure to update borrowed by in book object, decrement the copies
+
+set same for returning books, remove them from borrowed by, increment the copies 
+
+
+USER
+
+add users to the json file only if they do not already exist
+
+add users to the userlist once they have passed this check 
+
+when borrowing books check username against the user list in the json file (check is instance)
+
+allow to borrow and make sure to update borrowed by in book object, decrement the copies
+
+set same for returning books, remove them from borrowed by, increment the copies 
+
+
+"""  
+
+
+
+
+
+
 # importation of libraries used for the programme use cases commented next to each 
 
 import uuid                                                  # creation of unique identifiers for each book object 
 import re                                                    # used to match inputs to the regular expression format for validation purposes
 import json                                                  # used as data storage for interaction with the json file 
 from datetime import datetime, timedelta                     # used for date validation along with time changes for due dates 
-
 
 
 
