@@ -1,8 +1,6 @@
 """
 BOOK OBJECTS
 
-check year entry currently allows singular number to be entered. Enforce a level of length validation
-
 validate that book does not already exist in the collection check against details such as title and publication date. This accounts for new editions of books also. 
 
 BOOKLIST
@@ -326,10 +324,12 @@ def lib_loop():
             else:
                 date_only = pub_date.date()
                 formatted_date_only = date_only.strftime("%d/%m/%Y")
+
+                # Add validation here
                 book = Book(title, author, year, publisher, copies, formatted_date_only)
 
             
-            # converting the book object to dictionary using created method and appending to the data dictionary (json object to python dictionary)
+            # converting the book object to dictionary using created book method and appending to the data dictionary (json object to python dictionary)
             
             book_dict = book.to_dict()
             data["Books"].append(book_dict)
