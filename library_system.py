@@ -79,7 +79,7 @@ def is_digit(value):
     
     return True
 
-def valid_pub_year(value):
+def is_valid_pub_year(value):
     
     if len(str(value)) < 4:
         print("The year must be a valid 4 digit year. Try again please.")
@@ -312,7 +312,7 @@ def lib_loop():
             
             title = get_input("Enter book title: ")
             author = get_input("Enter author name: ")
-            year = get_input("Enter year of publication: ", is_digit)
+            year = get_input("Enter year of publication: ", is_valid_pub_year)                                  # added new validator function here to ensure valid year entry 
             publisher = get_input("Enter publisher: ")
             copies = get_input("Enter number of copies: ", is_digit)
             
