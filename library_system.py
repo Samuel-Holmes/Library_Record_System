@@ -72,7 +72,20 @@ def is_valid_email(email):
     return re.match(reg_email, email) is not None
 
 def is_digit(value):
-    return str(value).isdigit()
+    
+    if value is not isinstance(value, int):
+        print("Number entered must be a valid integer. Please try again.")
+        return False
+    
+    return True
+
+def valid_pub_year(value):
+    
+    if len(str(value)) < 4:
+        print("The year must be a valid 4 digit year. Try again please.")
+        return False
+    
+    return True
 
 def parse_date(date_str):
     try:
@@ -238,9 +251,12 @@ class UserList:
         self.user_list = {}
 
     def add_user(self):
+        
         username = get_input("Enter username (or 'q' to exit): ")
+        
         if not username:
             return
+        
         firstname = get_input("Enter first name: ")
         surname = get_input("Enter surname: ")
         housenumber = get_input("Enter house number: ")
@@ -249,6 +265,7 @@ class UserList:
         email = get_input("Enter email address: ", is_valid_email)
         dob_str = get_input("Enter date of birth (DD/MM/YYYY): ")
         dob = parse_date(dob_str)
+        
         if not dob:
             print("Invalid date format. User not added.")
             return
