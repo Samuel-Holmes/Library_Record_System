@@ -51,7 +51,7 @@ with open("data.json", "r") as f:
 
 # Utility functions
 
-def get_input(prompt, validator=None, cast_type=str):
+def get_input_string(prompt, validator=None, cast_type=str):
     while True:
         value = input(prompt).strip()
         if value.lower() == 'q':
@@ -65,6 +65,9 @@ def get_input(prompt, validator=None, cast_type=str):
             return value
         except ValueError:
             print("Invalid input. Please try again.")
+
+def get_input_int(prompt, validator=None, cast_type=int):
+    pass
 
 def is_valid_email(email):
     return re.match(reg_email, email) is not None
@@ -122,6 +125,7 @@ class Book:
 # BookList class
 
 class BookList:
+    
     def __init__(self):
         self.book_list = {}
 
@@ -142,6 +146,7 @@ class BookList:
         for book in self.book_list.values():
             print(f"{book.title} by {book.author}, {book.availableCopies} copies available, ID: {book.bookID}")
 
+    
     def borrow_book(self, book_id, username):
         book = self.book_list.get(book_id)
         if book and book.availableCopies > 0:
@@ -152,6 +157,7 @@ class BookList:
         else:
             print("Book not available.")
 
+    
     def return_book(self, book_id, username):
         book = self.book_list.get(book_id)
         if book and username in book.borrowed_by:
@@ -164,6 +170,10 @@ class BookList:
                 print("Book returned on time. Thank you!")
         else:
             print("No record of this book being borrowed by you.")
+
+    
+    def remove_book_from_collection(self, title):
+        pass
 
 
 # User class
@@ -180,7 +190,7 @@ class User:
         self.dateofbirth = dateofbirth
 
     def update_details(self):
-        new_firstname = get_input("Enter new first name (or 'q' to exit): ")
+        new_firstname = get_input_string("Enter new first name (or 'q' to exit): ")
         
         if new_firstname is None:
             print("Update cancelled.")
@@ -188,7 +198,7 @@ class User:
         
         self.firstname = new_firstname
 
-        new_surname = get_input("Enter new surname (or 'q' to exit): ")
+        new_surname = get_input_string("Enter new surname (or 'q' to exit): ")
         
         if new_surname is None:
             print("Update cancelled.")
@@ -196,7 +206,7 @@ class User:
         
         self.surname = new_surname
 
-        new_housenumber = get_input("Enter new house number (or 'q' to exit): ")
+        new_housenumber = get_input_int("Enter new house number (or 'q' to exit): ")
         
         if new_housenumber is None:
             print("Update cancelled.")
@@ -204,7 +214,7 @@ class User:
         
         self.housenumber = new_housenumber
 
-        new_streetname = get_input("Enter new street name (or 'q' to exit): ")
+        new_streetname = get_input_string("Enter new street name (or 'q' to exit): ")
         
         if new_streetname is None:
             print("Update cancelled.")
@@ -212,7 +222,7 @@ class User:
         
         self.streetname = new_streetname
 
-        new_postcode = get_input("Enter new postcode (or 'q' to exit): ")
+        new_postcode = get_input_int("Enter new postcode (or 'q' to exit): ")
         
         if new_postcode is None:
             print("Update cancelled.")
@@ -220,7 +230,7 @@ class User:
         
         self.postcode = new_postcode
 
-        email = get_input("Enter new email address (or 'q' to exit): ", is_valid_email)
+        email = get_input_string("Enter new email address (or 'q' to exit): ", is_valid_email)
         
         if email is None:
             print("Update cancelled.")
@@ -228,7 +238,7 @@ class User:
         
         self.emailaddress = email
 
-        date_str = get_input("Enter new date of birth (DD/MM/YYYY) (or 'q' to exit): ")
+        date_str = get_input_string("Enter new date of birth (DD/MM/YYYY) (or 'q' to exit): ")
         
         if date_str is None:
             print("Update cancelled.")
@@ -250,18 +260,18 @@ class UserList:
 
     def add_user(self):
         
-        username = get_input("Enter username (or 'q' to exit): ")
+        username = get_input_string("Enter username (or 'q' to exit): ")
         
         if not username:
             return
         
-        firstname = get_input("Enter first name: ")
-        surname = get_input("Enter surname: ")
-        housenumber = get_input("Enter house number: ")
-        streetname = get_input("Enter street name: ")
-        postcode = get_input("Enter postcode: ")
-        email = get_input("Enter email address: ", is_valid_email)
-        dob_str = get_input("Enter date of birth (DD/MM/YYYY): ")
+        firstname = get_input_string("Enter first name: ")
+        surname = get_input_string("Enter surname: ")
+        housenumber = get_input_int("Enter house number: ")
+        streetname = get_input_string("Enter street name: ")
+        postcode = get_input_int("Enter postcode: ")
+        email = get_input_string("Enter email address: ", is_valid_email)
+        dob_str = get_input_string("Enter date of birth (DD/MM/YYYY): ")
         dob = parse_date(dob_str)
         
         if not dob:
@@ -308,13 +318,13 @@ def lib_loop():
             
             # creating the new book object getting user input 
             
-            title = get_input("Enter book title: ")
-            author = get_input("Enter author name: ")
-            year = get_input("Enter year of publication: ", is_valid_pub_year)                                  # added new validator function here to ensure valid year entry 
-            publisher = get_input("Enter publisher: ")
-            copies = get_input("Enter number of copies: ", is_digit)
+            title = get_input_string("Enter book title: ")
+            author = get_input_string("Enter author name: ")
+            year = get_input_int("Enter year of publication: ", is_valid_pub_year)                                  # added new validator function here to ensure valid year entry 
+            publisher = get_input_string("Enter publisher: ")
+            copies = get_input_int("Enter number of copies: ", is_digit)
             
-            pub_date_str = get_input("Enter publication date (DD/MM/YYYY): ")
+            pub_date_str = get_input_string("Enter publication date (DD/MM/YYYY): ")
             pub_date = parse_date(pub_date_str) 
             
             if not pub_date:
@@ -349,7 +359,7 @@ def lib_loop():
             user_list.add_user()
 
         elif choice == '3':
-            username = get_input("Enter username to update: ")
+            username = get_input_string("Enter username to update: ")
             user_list.update_user(username)
 
         elif choice == '4':
@@ -359,13 +369,13 @@ def lib_loop():
             user_list.list_users()
 
         elif choice == '6':
-            book_id = get_input("Enter book ID to borrow: ")
-            username = get_input("Enter your username: ")
+            book_id = get_input_string("Enter book ID to borrow: ")
+            username = get_input_string("Enter your username: ")
             book_list.borrow_book(book_id, username)
 
         elif choice == '7':
-            book_id = get_input("Enter book ID to return: ")
-            username = get_input("Enter your username: ")
+            book_id = get_input_string("Enter book ID to return: ")
+            username = get_input_string("Enter your username: ")
             book_list.return_book(book_id, username)
 
         elif choice == '8':
