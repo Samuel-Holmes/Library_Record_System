@@ -85,7 +85,12 @@ def get_input_int(prompt, validator=None, cast_type=int):
     
 
 def is_valid_email(email):
-    return re.match(reg_email, email) is not None
+    match = re.match(reg_email,email)
+
+    if match:
+        return True
+    else:
+        return False
 
 def is_digit(value):
     
