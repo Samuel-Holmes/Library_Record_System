@@ -1,11 +1,12 @@
 """
+USERLIST AND BOOKLIST
+
+remove data duplication by having these objects interact with books and users in the json storage respectively. there is no need to append them to two areas as opposed to one. Minimise it, have booklist interact with data['Books'] and userlist interact with data['users']
+
 BOOK OBJECTS
 
 validate that book does not already exist in the collection check against details such as title and publication date. This accounts for new editions of books also. 
 
-BOOKLIST
-
-add books to booklist in the json file when book object created
 
 ** enhancing borrow and return book methods **
     
@@ -105,7 +106,7 @@ def is_valid_pub_year(value):
 def parse_date(date_str):
     try:
         parsed_date = datetime.strptime(date_str, "%d/%m/%Y").date()
-        return parsed_date.strftime("%d/%m/%Y")  # Ensure consistent formatting
+        return parsed_date.strftime("%d/%m/%Y")  
     except ValueError:
         print("Invalid date format. Please use DD/MM/YYYY.")
         return None
@@ -355,13 +356,29 @@ def lib_loop():
                 else:
                     print("Please enter a valid date") 
             
-            # Add validation here
-            book = Book(title, author, year, publisher, copies, pub_date)
+            
+            found = False  
+
+            for book in data['Books']:
+                if (book['title'].lower() == title.lower() and
+                    book['author'].lower() == author.lower() and
+                    book['year'] == year and
+                    book['publisher'].lower() == publisher.lower() and
+                    book['publicationDate'] == pub_date):
+                    
+                    print("Book item already exists in the collection. Please update details of the existing book.")
+                    found = True
+                    break
+
+            # If no match was found, add the new book
+            if not found:
+                new_book = Book(title, author, year, publisher, copies, pub_date)
+
 
             
             # converting the book object to dictionary using created book method and appending to the data dictionary (json object to python dictionary)
             
-            book_dict = book.to_dict()
+            book_dict = new_book.to_dict()
             data["Books"].append(book_dict)
             
             # writing updated data to the json file 
@@ -369,9 +386,6 @@ def lib_loop():
             with open('data.json', 'w') as f:
                 json.dump(data, f, indent=2)
             
-            # adding book to the booklist
-
-            book_list.add_book_to_collection(book)
             print("Book added successfully")
 
 
