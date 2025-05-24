@@ -60,22 +60,36 @@ def get_input_string(prompt, validator=None, cast_type=str):
             value = cast_type(value)
             if validator:
                 if not validator(value):
-                    print("Invalid input. Please try again.")
+                    print("Please try again.")
                     continue
             return value
         except ValueError:
-            print("Invalid input. Please try again.")
+            print("Please try again.")
 
 def get_input_int(prompt, validator=None, cast_type=int):
-    pass
+    while True:
+        
+        value = input(prompt).strip()
+        
+        try:
+            value = cast_type(value)
+            if validator:
+                if not validator(value):
+                    print("Please try again.")
+                    continue
+            return value
+        
+        except ValueError:
+            print("Please try again")
+    
 
 def is_valid_email(email):
     return re.match(reg_email, email) is not None
 
 def is_digit(value):
     
-    if value is not isinstance(value, int):
-        print("Number entered must be a valid integer. Please try again.")
+    if type(value) != int:
+        print("Number entered must be a valid integer.")
         return False
     
     return True
@@ -83,16 +97,19 @@ def is_digit(value):
 def is_valid_pub_year(value):
     
     if len(str(value)) < 4:
-        print("The year must be a valid 4 digit year. Try again please.")
+        print("The year must be a valid 4 digit year.")
         return False
     
     return True
 
 def parse_date(date_str):
     try:
-        return datetime.strptime(date_str, "%d/%m/%Y")
+        parsed_date = datetime.strptime(date_str, "%d/%m/%Y").date()
+        return parsed_date.strftime("%d/%m/%Y")  # Ensure consistent formatting
     except ValueError:
+        print("Invalid date format. Please use DD/MM/YYYY.")
         return None
+       
 
 
 # Book class
@@ -324,19 +341,22 @@ def lib_loop():
             publisher = get_input_string("Enter publisher: ")
             copies = get_input_int("Enter number of copies: ", is_digit)
             
-            pub_date_str = get_input_string("Enter publication date (DD/MM/YYYY): ")
-            pub_date = parse_date(pub_date_str) 
-            
-            if not pub_date:
-                print("Invalid publication date.")
-                continue
-            
-            else:
-                date_only = pub_date.date()
-                formatted_date_only = date_only.strftime("%d/%m/%Y")
+            while True:
+                pub_date_str = get_input_string("Enter publication date (DD/MM/YYYY): ")
+                
+                if pub_date_str is None:
+                    print("Book addition cancelled.")
+                    return
+                
+                pub_date = parse_date(pub_date_str)
 
-                # Add validation here
-                book = Book(title, author, year, publisher, copies, formatted_date_only)
+                if pub_date:
+                    break
+                else:
+                    print("Please enter a valid date") 
+            
+            # Add validation here
+            book = Book(title, author, year, publisher, copies, pub_date)
 
             
             # converting the book object to dictionary using created book method and appending to the data dictionary (json object to python dictionary)
