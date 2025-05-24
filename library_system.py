@@ -92,6 +92,7 @@ def is_valid_email(email):
     else:
         return False
 
+
 def is_digit(value):
     
     if type(value) != int:
@@ -145,7 +146,7 @@ class Book:
          
 
 
-# BookList class
+# BookList class      ******************************************************************FOCUS HERE NEXT************************************************************************************************************
 
 class BookList:
     
@@ -343,7 +344,7 @@ def lib_loop():
             
             title = get_input_string("Enter book title: ")
             author = get_input_string("Enter author name: ")
-            year = get_input_int("Enter year of publication: ", is_valid_pub_year)                                  # added new validator function here to ensure valid year entry 
+            year = get_input_int("Enter year of publication: ", is_valid_pub_year)                  
             publisher = get_input_string("Enter publisher: ")
             copies = get_input_int("Enter number of copies: ", is_digit)
             
