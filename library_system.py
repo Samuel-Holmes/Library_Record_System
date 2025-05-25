@@ -3,6 +3,9 @@ USERLIST AND BOOKLIST
 
 remove data duplication by having these objects interact with books and users in the json storage respectively. there is no need to append them to two areas as opposed to one. Minimise it, have booklist interact with data['Books'] and userlist interact with data['users']
 
+BOOKLIST 
+
+borrow book method needs validation to check that the user exists before allowing them to borrow a book. needs to append to users borrowed books also. 
 BOOK OBJECTS
 
 validate that book does not already exist in the collection check against details such as title and publication date. This accounts for new editions of books also. 
@@ -171,6 +174,7 @@ class BookList:
             print(book)
 
     
+    # check user exists also 
     @classmethod 
     def borrow_book(cls,book_id, username):
         
@@ -214,7 +218,7 @@ class BookList:
 # User class
 
 class User:
-    def __init__(self, username, firstname, surname, housenumber, streetname, postcode, emailaddress, dateofbirth):
+    def __init__(self, username, firstname, surname, housenumber, streetname, postcode, emailaddress, dateofbirth, borrowed_books):
         self.username = username
         self.firstname = firstname
         self.surname = surname
@@ -223,6 +227,7 @@ class User:
         self.postcode = postcode
         self.emailaddress = emailaddress
         self.dateofbirth = dateofbirth
+        self.borrowed_books = []
 
     def update_details(self):
         new_firstname = get_input_string("Enter new first name (or 'q' to exit): ")
