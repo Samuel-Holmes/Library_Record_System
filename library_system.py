@@ -149,7 +149,7 @@ class Book:
          
 
 
-# BookList class      ******************************************************************FOCUS HERE NEXT************************************************************************************************************
+# BookList class
 
 class BookList:
     
@@ -174,7 +174,7 @@ class BookList:
             print(book)
 
     
-    # check user exists also 
+    # check user exists also ***********************************************************************************************
     @classmethod 
     def borrow_book(cls,book_id, username):
         
