@@ -150,25 +150,25 @@ class Book:
 
 class BookList:
     
-    def __init__(self):
-        self.book_list = {}
-
-    def add_book_to_collection(self, book):
-        if isinstance(book, Book):
-            self.book_list[book.bookID] = book
-        else:
-            raise ValueError("Invalid book object")
-
-    def find_book_by_title(self, title):
+    @classmethod    
+    def find_book_by_title(cls,input):
+        
         matched_books = []
-        for book in self.book_list.values():
-            if title.lower() in book.title.lower():
+        for book in data["Books"]:
+            if book['title'].lower().strip() == input.lower().strip():
                 matched_books.append(book)
-            return matched_books
+        
+        if matched_books:
+            return matched_books 
+        
+        else:
+            return "Book by that title has not been found"
 
-    def list_books(self):
-        for book in self.book_list.values():
-            print(f"{book.title} by {book.author}, {book.availableCopies} copies available, ID: {book.bookID}")
+    @classmethod
+    def list_all_books(cls):
+        
+        for book in data['Books']:
+            print(book)
 
     
     def borrow_book(self, book_id, username):
@@ -320,10 +320,7 @@ class UserList:
 
 
 # Main loop
-
-def lib_loop():
-    book_list = BookList()
-    user_list = UserList()
+    
 
     while True:
         print("\nLibrary Menu:")
@@ -353,15 +350,14 @@ def lib_loop():
                 
                 if pub_date_str is None:
                     print("Book addition cancelled.")
-                    return
-                
+                    break
+
                 pub_date = parse_date(pub_date_str)
 
                 if pub_date:
                     break
                 else:
                     print("Please enter a valid date") 
-            
             
             found = False  
 
@@ -376,12 +372,11 @@ def lib_loop():
                     found = True
                     break
 
-            # If no match was found, add the new book
-            if not found:
-                new_book = Book(title, author, year, publisher, copies, pub_date)
-
-
+                # If no match was found, add the new book
+                if not found:
+                    new_book = Book(title, author, year, publisher, copies, pub_date)
             
+
             # converting the book object to dictionary using created book method and appending to the data dictionary (json object to python dictionary)
             
             book_dict = new_book.to_dict()
