@@ -130,7 +130,7 @@ class Book:
         self.publisher = publisher
         self.availableCopies = int(availableCopies)
         self.publicationDate = publicationDate
-        self.borrowed_by = {}
+        self.borrowed_by = []
 
     def to_dict(self):
         return {
@@ -171,16 +171,27 @@ class BookList:
             print(book)
 
     
-    def borrow_book(self, book_id, username):
-        book = self.book_list.get(book_id)
-        if book and book.availableCopies > 0:
-            due_date = datetime.now() + timedelta(days=14)
-            book.availableCopies -= 1
-            book.borrowed_by[username] = due_date
-            print(f"Book borrowed successfully. Due on {due_date.strftime('%d/%m/%Y')}")
-        else:
-            print("Book not available.")
+    @classmethod 
+    def borrow_book(cls,book_id, username):
+        
+        for book in data['Books']:
+            if book['bookID'] == book_id:
+                if  book['availableCopies'] > 0:
+                    due_date = datetime.now() + timedelta(days=14)
+                    book['availableCopies'] -= 1
+                    book['borrowed_by'].append({"username": username, "due_date": due_date})
 
+                    print(f"Book borrowed successfully item is due on {due_date}")
+
+                    with open("data.json", "w") as f:
+                        json.dump(data,f,indent =2)
+                    return
+                
+                else:
+                    print("Book is not available currently please check back at a later time")
+                    return
+
+        print("Book with that ID was not found")
     
     def return_book(self, book_id, username):
         book = self.book_list.get(book_id)
@@ -372,14 +383,12 @@ class UserList:
                     found = True
                     break
 
-                # If no match was found, add the new book
-                if not found:
-                    new_book = Book(title, author, year, publisher, copies, pub_date)
-            
+            # If no match was found, add the new book
+            if not found:
+                new_book = Book(title, author, year, publisher, copies, pub_date)
+                book_dict = new_book.to_dict()
 
             # converting the book object to dictionary using created book method and appending to the data dictionary (json object to python dictionary)
-            
-            book_dict = new_book.to_dict()
             data["Books"].append(book_dict)
             
             # writing updated data to the json file 
