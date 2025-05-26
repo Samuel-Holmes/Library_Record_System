@@ -209,18 +209,9 @@ class BookList:
         if not book_found:
             print("Book with those details was not found. Please try again. If you are holding a Physical copy of the book then available copies need updating before this transaction can proceed, there is an error in the inventory list.")
 
+    
     def return_book(self, book_id, username):
-        book = self.book_list.get(book_id)
-        if book and username in book.borrowed_by:
-            due_date = book.borrowed_by.pop(username)
-            book.availableCopies += 1
-            days_late = (datetime.now() - due_date).days
-            if days_late > 0:
-                print(f"Book returned {days_late} days late. Consider charging a fee.")
-            else:
-                print("Book returned on time. Thank you!")
-        else:
-            print("No record of this book being borrowed by you.")
+        pass
 
     
     def remove_book_from_collection(self, title):
