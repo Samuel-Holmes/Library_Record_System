@@ -173,30 +173,42 @@ class BookList:
         for book in data['Books']:
             print(book)
 
-    
-    # check user exists also ***********************************************************************************************
+
     @classmethod 
     def borrow_book(cls,book_id, username):
+        user_exists = False 
+        for user in data['Users']:
+            if user['username'] == username:
+                user_exists = True 
+                break
+        if not user_exists:
+            print("User with those details does not exist. Please try again")
+            return
         
+        book_found = False
         for book in data['Books']:
             if book['bookID'] == book_id:
-                if  book['availableCopies'] > 0:
+                book_found = True
+                if book['availableCopies'] > 0:
                     due_date = datetime.now() + timedelta(days=14)
+                    due_date = due_date.strftime("%d/%m/%Y")
                     book['availableCopies'] -= 1
+
                     book['borrowed_by'].append({"username": username, "due_date": due_date})
+                    print(f"Book has been borrowed successfully and is due on: {due_date}")
 
-                    print(f"Book borrowed successfully item is due on {due_date}")
+                    try: 
+                        with open("data.json", "w") as f:
+                            json.dump(data, f, indent=2)
+                    
+                    except IOError:
+                        print("Error saving data to file")
 
-                    with open("data.json", "w") as f:
-                        json.dump(data,f,indent =2)
                     return
-                
-                else:
-                    print("Book is not available currently please check back at a later time")
-                    return
 
-        print("Book with that ID was not found")
-    
+        if not book_found:
+            print("Book with those details was not found. Please try again. If you are holding a Physical copy of the book then available copies need updating before this transaction can proceed, there is an error in the inventory list.")
+
     def return_book(self, book_id, username):
         book = self.book_list.get(book_id)
         if book and username in book.borrowed_by:
