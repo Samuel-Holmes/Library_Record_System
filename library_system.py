@@ -176,25 +176,35 @@ class BookList:
 
     @classmethod 
     def borrow_book(cls,book_id, username):
-        user_exists = False 
+        
+        user_exists = False
+        user_data = None
+
         for user in data['Users']:
             if user['username'] == username:
-                user_exists = True 
+                user_exists = True
+                user_data = user
                 break
+        
         if not user_exists:
             print("User with those details does not exist. Please try again")
             return
         
         book_found = False
         for book in data['Books']:
+            
             if book['bookID'] == book_id:
+                
                 book_found = True
+                
                 if book['availableCopies'] > 0:
                     due_date = datetime.now() + timedelta(days=14)
                     due_date = due_date.strftime("%d/%m/%Y")
                     book['availableCopies'] -= 1
 
                     book['borrowed_by'].append({"username": username, "due_date": due_date})
+                    user_data['borrowed_books'].append({"bookID": book_id, "title": book['title'], "due_date": due_date})
+                    
                     print(f"Book has been borrowed successfully and is due on: {due_date}")
 
                     try: 
