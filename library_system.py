@@ -209,9 +209,36 @@ class BookList:
         if not book_found:
             print("Book with those details was not found. Please try again. If you are holding a Physical copy of the book then available copies need updating before this transaction can proceed, there is an error in the inventory list.")
 
-    
-    def return_book(self, book_id, username):
-        pass
+    @classmethod
+    def return_book(cls, book_id, username):
+        
+        user_exists = False
+        for user in data['Users']:
+            if user['username'] == username:
+                user_exists = True
+                break
+        
+        if not user_exists:
+            print("User with those details does not exist. Please try again.")
+            return
+
+        book_found = False
+        for book in data['Books']:
+            if book['bookID'] == book_id:
+                book_found = True
+                new_borrowed_by = []
+
+                for item in book['borrowed_by']:
+                    if item['username'] != username:
+                        new_borrowed_by.append(item)
+
+                book['borrowed_by'] = new_borrowed_by
+                book['availableCopies'] += 1
+                break
+
+        if not book_found:
+            print("Book with that ID was not found please try again.")
+
 
     
     def remove_book_from_collection(self, title):
