@@ -294,8 +294,14 @@ class UserList:
         
         username = get_input_string("Enter username (or 'q' to exit): ")
         
-        if not username:
+        if not username or username.lower() == 'q':
             return
+        
+        for user in data['Users']:
+            if username == user['username']:
+                print("A user with that username already exists")
+                return False
+            
         
         firstname = get_input_string("Enter first name: ")
         surname = get_input_string("Enter surname: ")
@@ -308,11 +314,11 @@ class UserList:
         
         if not dob:
             print("Invalid date format. User not added.")
-            return
+            return False
+
 
         user = User(username, firstname, surname, housenumber, streetname, postcode, email, dob)
-        self.user_list[username] = user
-        print("User added successfully")
+        
 
     def update_user(self, username):
         user = self.user_list.get(username)
@@ -327,103 +333,8 @@ class UserList:
             print(f"{user.username}: {user.firstname} {user.surname}")
 
 
-# Main loop
-    
 
-    while True:
-        print("\nLibrary Menu:")
-        print("1. Add a book")
-        print("2. Add a user")
-        print("3. Update user details")
-        print("4. List all books")
-        print("5. List all users")
-        print("6. Borrow a book")
-        print("7. Return a book")
-        print("8. Exit")
+# Main Loop 
 
-        choice = input("Select an option 1-8: ").strip()
-
-        if choice == '1':
-            
-            # creating the new book object getting user input 
-            
-            title = get_input_string("Enter book title: ")
-            author = get_input_string("Enter author name: ")
-            year = get_input_int("Enter year of publication: ", is_valid_pub_year)                  
-            publisher = get_input_string("Enter publisher: ")
-            copies = get_input_int("Enter number of copies: ", is_digit)
-            
-            while True:
-                pub_date_str = get_input_string("Enter publication date (DD/MM/YYYY): ")
-                
-                if pub_date_str is None:
-                    print("Book addition cancelled.")
-                    break
-
-                pub_date = parse_date(pub_date_str)
-
-                if pub_date:
-                    break
-                else:
-                    print("Please enter a valid date") 
-            
-            found = False  
-
-            for book in data['Books']:
-                if (book['title'].lower() == title.lower() and
-                    book['author'].lower() == author.lower() and
-                    book['year'] == year and
-                    book['publisher'].lower() == publisher.lower() and
-                    book['publicationDate'] == pub_date):
-                    
-                    print("Book item already exists in the collection. Please update details of the existing book.")
-                    found = True
-                    break
-
-            # If no match was found, add the new book
-            if not found:
-                new_book = Book(title, author, year, publisher, copies, pub_date)
-                book_dict = new_book.to_dict()
-
-            # converting the book object to dictionary using created book method and appending to the data dictionary (json object to python dictionary)
-            data["Books"].append(book_dict)
-            
-            # writing updated data to the json file 
-
-            with open('data.json', 'w') as f:
-                json.dump(data, f, indent=2)
-            
-            print("Book added successfully")
-
-
-        elif choice == '2':
-            user_list.add_user()
-
-        elif choice == '3':
-            username = get_input_string("Enter username to update: ")
-            user_list.update_user(username)
-
-        elif choice == '4':
-            book_list.list_books()
-
-        elif choice == '5':
-            user_list.list_users()
-
-        elif choice == '6':
-            book_id = get_input_string("Enter book ID to borrow: ")
-            username = get_input_string("Enter your username: ")
-            book_list.borrow_book(book_id, username)
-
-        elif choice == '7':
-            book_id = get_input_string("Enter book ID to return: ")
-            username = get_input_string("Enter your username: ")
-            book_list.return_book(book_id, username)
-
-        elif choice == '8':
-            print("Exiting system...")
-            break
-
-        else:
-            print("Invalid choice. Please enter a number between 1-8.")
-
-lib_loop()
+def run_system():
+    pass
