@@ -226,17 +226,19 @@ class BookList:
         for user in data['Users']:
             if user['username'] == username:
                 user_exists = True
+                user_data = user
                 break
         
         if not user_exists:
             print("User with those details does not exist. Please try again.")
-            return
+            return False
 
         book_found = False
         for book in data['Books']:
             if book['bookID'] == book_id:
                 book_found = True
                 new_borrowed_by = []
+                
 
                 for item in book['borrowed_by']:
                     if item['username'] != username:
@@ -244,10 +246,28 @@ class BookList:
 
                 book['borrowed_by'] = new_borrowed_by
                 book['availableCopies'] += 1
-                break
+
+                new_borrowing_user_record = []
+                for record in user_data['borrowed_by']:
+                    if record['bookID'] != book_id:
+                        new_borrowing_user_record.append(record)
+
+                user_data['borrowed_books'] = new_borrowing_user_record
+
+                try: 
+                    with open("data.json", "w") as f:
+                        json.dump(data, f, indent=2)
+                    
+                except IOError:
+                    print("Error saving data to file")
+
+                print("Book returned successfully.")
+                return True 
+
 
         if not book_found:
             print("Book with that ID was not found please try again.")
+            return False
 
 
     
