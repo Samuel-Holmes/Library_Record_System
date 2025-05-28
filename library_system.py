@@ -3,21 +3,7 @@ USERLIST AND BOOKLIST
 
 remove data duplication by having these objects interact with books and users in the json storage respectively. there is no need to append them to two areas as opposed to one. Minimise it, have booklist interact with data['Books'] and userlist interact with data['users']
 
-BOOKLIST 
-
-borrow book method needs validation to check that the user exists before allowing them to borrow a book. needs to append to users borrowed books also. 
-BOOK OBJECTS
-
-validate that book does not already exist in the collection check against details such as title and publication date. This accounts for new editions of books also. 
-
-
-** enhancing borrow and return book methods **
-    
-    when borrowing books check username against the user list in the json file (check is instance).
-
-    allow to borrow and make sure to update borrowed by in book object, decrement the copies.
-
-    set same for returning books, remove them from borrowed by, increment the copies. 
+add a way to remove books from the collection in the booklist class 
 
 USER
 
@@ -270,11 +256,6 @@ class BookList:
             return False
 
 
-    
-    def remove_book_from_collection(self, title):
-        pass
-
-
 # User class
 
 class User:
@@ -289,74 +270,25 @@ class User:
         self.dateofbirth = dateofbirth
         self.borrowed_books = []
 
-    def update_details(self):
-        new_firstname = get_input_string("Enter new first name (or 'q' to exit): ")
-        
-        if new_firstname is None:
-            print("Update cancelled.")
-            return
-        
-        self.firstname = new_firstname
+    def user_to_dict(self):
+        return {
+            "username" : self.username,
+            "firstname": self.firstname,
+            "surname" : self.surname, 
+            "housenumber" : self.housenumber,
+            "streetname": self.streetname, 
+            "postcode" : self.postcode, 
+            "emailadress" : self.emailaddress,
+            "borrowed_books" : self.borrowed_books
+        }
+   
 
-        new_surname = get_input_string("Enter new surname (or 'q' to exit): ")
-        
-        if new_surname is None:
-            print("Update cancelled.")
-            return
-        
-        self.surname = new_surname
-
-        new_housenumber = get_input_int("Enter new house number (or 'q' to exit): ")
-        
-        if new_housenumber is None:
-            print("Update cancelled.")
-            return
-        
-        self.housenumber = new_housenumber
-
-        new_streetname = get_input_string("Enter new street name (or 'q' to exit): ")
-        
-        if new_streetname is None:
-            print("Update cancelled.")
-            return
-        
-        self.streetname = new_streetname
-
-        new_postcode = get_input_int("Enter new postcode (or 'q' to exit): ")
-        
-        if new_postcode is None:
-            print("Update cancelled.")
-            return
-        
-        self.postcode = new_postcode
-
-        email = get_input_string("Enter new email address (or 'q' to exit): ", is_valid_email)
-        
-        if email is None:
-            print("Update cancelled.")
-            return
-        
-        self.emailaddress = email
-
-        date_str = get_input_string("Enter new date of birth (DD/MM/YYYY) (or 'q' to exit): ")
-        
-        if date_str is None:
-            print("Update cancelled.")
-            return
-        
-        dob = parse_date(date_str)
-        if dob:
-            self.dateofbirth = dob
-        else:
-            print("Invalid date format. Date of birth not updated.")
-
+# RESUME WORK HERE ON THE USERLIST CLASS, THE METHODS NOW NEED TO BE IMPLEMENTED AS CLASS METHODS
 
 
 # UserList class
 
 class UserList:
-    def __init__(self):
-        self.user_list = {}
 
     def add_user(self):
         
