@@ -18,28 +18,35 @@ add users to the userlist once they have passed this check.
 
 
 
-# importation of libraries used for the programme use cases commented next to each 
+# Importation of libraries: 
 
-import uuid                                                  # creation of unique identifiers for each book object 
-import re                                                    # used to match inputs to the regular expression format for validation purposes
-import json                                                  # used as data storage for interaction with the json file 
-from datetime import datetime, timedelta                     # used for date validation along with time changes for due dates 
+# creation of unique identifiers for each book object
+import uuid                                                   
+
+# used to match inputs to the regular expression format for validation purposes
+import re
+
+# used as data storage for interaction with the json file 
+import json
+
+# used for date validation along with time changes for due dates 
+from datetime import datetime, timedelta                    
 
 
 
-# regular expression for email validation 
+# Regular expression for email validation: 
 
 reg_email = r"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
 
 
-# opening and loading json file
+# Opening and loading json file:
 
 with open("data.json", "r") as f:
     data = json.load(f)
 
 
 
-# Utility functions
+# Utility functions:
 
 # This function allows for getting string inputs, it includes a validator as a parameter so a validator can be passed as an argument.
 
@@ -88,7 +95,7 @@ def get_input_int(prompt, validator=None, cast_type=int):
     
 
 
-# This function is for validating emails received during get_input_string function call
+# This function is for validating emails received during get_input_string function call.
 
 def is_valid_email(email):                                                                 
     match = re.match(reg_email,email)
@@ -100,7 +107,7 @@ def is_valid_email(email):
 
 
 
-# This function verifies valid integers when passed to the get_input_int function
+# This function verifies valid integers when passed to the get_input_int function.
 
 def is_digit(value):                                                                        
     
@@ -111,7 +118,7 @@ def is_digit(value):
     return True
 
 
-# This function ensures that publication year length is not less than 4 digits in length
+# This function ensures that publication year length is not less than 4 digits in length.
 
 def is_valid_pub_year(value):                                                                
     
@@ -122,7 +129,7 @@ def is_valid_pub_year(value):
     return True
 
 
-# This function checks validity of dates DD/MM/YYYY it attempts to create a date object from the users input. If it succeeds date is returned as a string. If it fails the error message is presented
+# This function checks validity of dates DD/MM/YYYY it attempts to create a date object from the users input. If it succeeds date is returned as a string. If it fails the error message is presented.
 
 def parse_date(date_str):                                                                  
     
@@ -136,9 +143,11 @@ def parse_date(date_str):
        
 
 
-# Book class
+# Book class:
 
 class Book:
+
+# The constructor that implements unique IDs to the book objects along with other attributes 
     
     def __init__(self, title, author, year, publisher, availableCopies, publicationDate):
         self.bookID = str(uuid.uuid4())
@@ -150,7 +159,8 @@ class Book:
         self.publicationDate = publicationDate
         self.borrowed_by = []
 
-    
+# The method below converts the Book instances to a dictionary format to allow for easy access and storage within the data.json file.
+
     def to_dict(self):
         return {
             "bookID" : self.bookID,
@@ -165,10 +175,12 @@ class Book:
          
 
 
-# BookList class
+# BookList class:
 
 class BookList:
-    
+
+# The method below is for finding a book within data['Books'] by title entered by the end user. It checks if the book exists and if it does it appends that to a list matched books which is returned by the method. Otherwise, it will alert the user that a book with that title does not exist.
+
     @classmethod    
     def find_book_by_title(cls,input):
         
@@ -183,13 +195,16 @@ class BookList:
         else:
             return "Book by that title has not been found"
 
-    
+
+# This method iterates over and prints all books with the data['Books] list
+   
     @classmethod
     def list_all_books(cls):
         
         for book in data['Books']:
             print(book)
 
+# This method allows for the borrowing of books, it checks both the user exists and the book exists in the collection before it can be borrowed. It then decrements the available copies appropriately, updates the books borrowed by and users borrowed books attributes appropriately.
 
     @classmethod 
     def borrow_book(cls,book_id, username):
@@ -239,7 +254,8 @@ class BookList:
         if not book_found:
             print("Book with those details was not found. Please try again. If you are holding a Physical copy of the book then available copies need updating before this transaction can proceed, there is an error in the inventory list.")
 
-    
+
+# This method allows for book returns, again it checks that both the user and book objects exist. It then appropriately updates the neccessary attributes and increments available copies.   
     
     @classmethod
     def return_book(cls, book_id, username):
