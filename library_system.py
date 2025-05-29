@@ -316,7 +316,8 @@ class BookList:
 # User class
 
 class User:
-    
+
+# The constructor allowing for User object instances to be created. 
     
     def __init__(self, username, firstname, surname, housenumber, streetname, postcode, emailaddress, dateofbirth, borrowed_books):
         self.username = username
@@ -329,7 +330,7 @@ class User:
         self.dateofbirth = dateofbirth
         self.borrowed_books = []
 
-    
+# The method below is used to convert the User objects to dictionaries for access and storage within the data.json file      
     
     def user_to_dict(self):
         return {
