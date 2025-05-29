@@ -319,7 +319,7 @@ class User:
 
 # The constructor allowing for User object instances to be created. 
     
-    def __init__(self, username, firstname, surname, housenumber, streetname, postcode, emailaddress, dateofbirth, borrowed_books):
+    def __init__(self, username, firstname, surname, housenumber, streetname, postcode, emailaddress, dateofbirth):
         self.username = username
         self.firstname = firstname
         self.surname = surname
@@ -330,7 +330,7 @@ class User:
         self.dateofbirth = dateofbirth
         self.borrowed_books = []
 
-# The method below is used to convert the User objects to dictionaries for access and storage within the data.json file      
+# The method below is used to convert the User objects to dictionaries for access and storage within the data.json file.      
     
     def user_to_dict(self):
         return {
@@ -350,7 +350,7 @@ class User:
 
 class UserList:
 
-    
+# The method below allows for creation of user objects based upon user input. i.e they input the arguments passed to the constructor above. This contains validation to prevent duplicates and invalid dates of birth it then writes the updated data to the json file.      
     
     @classmethod
     def add_user(cls):
@@ -396,7 +396,7 @@ class UserList:
         return True
 
     
-    
+# The method below allows for an upate of user details.     
     
     def update_user_details(cls, username):
         user_data = None   
