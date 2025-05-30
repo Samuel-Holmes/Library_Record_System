@@ -1,21 +1,10 @@
+"""
+create a method to update available copies of a book by book ID
 
-
+from there look at developing the main loop further
 
 
 """
-USERLIST AND BOOKLIST
-
-remove data duplication by having these objects interact with books and users in the json storage respectively. there is no need to append them to two areas as opposed to one. Minimise it, have booklist interact with data['Books'] and userlist interact with data['users']
-
-add a way to remove books from the collection in the booklist class 
-
-USER
-
-add users to the json file only if they do not already exist.
-
-add users to the userlist once they have passed this check. 
-
-"""  
 
 
 
@@ -217,14 +206,42 @@ class BookList:
     def add_book_to_collection(cls):
         new_book = False
         
-        book_title_input = get_input_string("Book title: ").lower().strip()
-        book_author_input = get_input_string("Author full name:  ").lower().strip()
+        book_title_input = get_input_string("Book title: ")
+        book_author_input = get_input_string("Author full name:  ")
         book_year_input = get_input_int("Book year: ", is_valid_pub_year)
         book_publisher_input = get_input_string("Publisher: ")
         book_available_copies_input = get_input_int("Available copies: ", is_digit)
         book_publication_date_input = get_input_string("Publication date in DD/MM/YYYY format: ", parse_date)
-        
 
+        try:
+            book_details = Book(book_title_input,book_author_input,book_year_input,book_publisher_input,book_available_copies_input,book_publication_date_input)
+            book_details_dictionary = book_details.to_dict()
+            
+        
+        except ValueError:
+            print("Some details are incorrect please try again.")
+            book_details = None
+            book_details_dictionary = None
+
+        if book_details_dictionary:   
+            
+            for book in data['Books']:
+            
+                if (
+                    book_details_dictionary['title'].lower().strip() == book['title'].lower().strip() 
+                    and book_details_dictionary['author'].lower().strip() == book['author'].lower().strip() 
+                    and book_details_dictionary['year'].lower().strip() == book['year'].lower().strip() 
+                    and book_details_dictionary['publisher'].lower().strip() == book['publisher'].lower().strip() 
+                    and book_details_dictionary['publicationDate'].strip() == book['publicationDate'].strip()
+                ):
+                    
+                    print("Book with those details was already found in the collection. \nPlease use update book available copies menu choice and add extra copies.")
+                    book_details = None
+                    book_details_dictionary = None
+
+                else:
+                    save()
+                    print("Book added to collection successfully.")
 
 # The method below is for finding a book within data['Books'] by title entered by the end user. It checks if the book exists and if it does it appends that to a list matched books which is returned by the method. Otherwise, it will alert the user that a book with that title does not exist.
 
@@ -292,7 +309,7 @@ class BookList:
                     save()
 
         if not book_found:
-            print("Book with those details was not found. Please try again. If you are holding a Physical copy of the book then available copies need updating before this transaction can proceed, there is an error in the inventory list.")
+            print("Book with those details was not found. Please try again. If you are holding a physical copy of the book then available copies need updating before this transaction can proceed, there is an error in the inventory list.")
 
 
 # This method allows for book returns, again it checks that both the user and book objects exist. It then appropriately updates the neccessary attributes and increments available copies.   
@@ -454,6 +471,7 @@ class UserList:
 
 
 # Main Loop 
+"""
 
 def run_system():
     
@@ -484,3 +502,5 @@ def run_system():
 
 
 run_system()
+
+"""
