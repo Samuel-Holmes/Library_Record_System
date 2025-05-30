@@ -92,8 +92,33 @@ def get_input_int(prompt, validator=None, cast_type=int):
         
         except ValueError:
             print("Please try again")
-    
 
+# This function is for saving updated data in temporary memory to the json file. 
+
+def save():
+    try:
+        with open("data.json", "w") as f:
+            json.dump(data, f, indent=2)
+    
+    except IOError:
+        print("Details could not be saved the system will now try resave the details.")
+        re_save_details()
+
+    else:
+        print("Details saved successfully.")
+
+# This function is for retrying a failed save attempt.
+
+def re_save_details():
+    try:
+        with open("data.json", "w") as f:
+            json.dump(data, f, indent=2)
+        
+    except IOError:
+        print("Save was retried and failed again. Please manually record these details by hand. Attempt to update them again later using the old details.")
+
+    else:
+        print("Details saved successfully.")
 
 # This function is for validating emails received during get_input_string function call.
 
@@ -398,6 +423,7 @@ class UserList:
     
 # The method below allows for an upate of user details.     
     
+    @classmethod
     def update_user_details(cls, username):
         user_data = None   
         user_found = False
@@ -410,8 +436,7 @@ class UserList:
             
         if not user_found:
             print("User with that username was not found in the system")
-        else:
-            return user_data
+            return None
         
         user_data['username'] = get_input_string("Enter new username: ")
         user_data['firstname'] = get_input_string("Enter first name: ")
@@ -426,7 +451,24 @@ class UserList:
         if dob:
             user_data['dateofbirth'] = dob
             
-           
+        try:
+            with open("data.json", "w") as f:
+                json.dump(data, f, indent=2)
+
+        except IOError:
+            print("Details could not be written to storage")
+            retry_save = get_input_string("Would you like to try saving these details again? (yes/no)").lower()
+
+            if retry_save == "yes":
+                try:
+                    with open("data.json", "w") as f:
+                    json.dump(data, f, indent=2)
+
+                except IOerror:
+
+
+
+        print('User added successfully')   
 
     def list_users(self):
         pass
