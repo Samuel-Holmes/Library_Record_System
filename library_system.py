@@ -435,11 +435,8 @@ class UserList:
         user_data['streetname'] = get_input_string("Enter street name: ")
         user_data['postcode'] = get_input_int("Enter postcode: ")
         user_data['email'] = get_input_string("Enter email address: ", is_valid_email)
-        dob_str = get_input_string("Enter date of birth (DD/MM/YYYY): ")
-        dob = parse_date(dob_str)
-
-        if dob:
-            user_data['dateofbirth'] = dob
+        user_data['dateofbirth'] = get_input_string("Enter date of birth (DD/MM/YYYY): ", parse_date)
+        
             
         save()   
 
