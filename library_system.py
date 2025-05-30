@@ -56,7 +56,7 @@ def get_input_string(prompt, validator=None, cast_type=str):
         value = input(prompt).strip()
         
         if value.lower() == 'q':
-            return None
+            return False
         
         try:
             
@@ -81,6 +81,9 @@ def get_input_int(prompt, validator=None, cast_type=int):
     while True:
         
         value = input(prompt).strip()
+
+        if value.lower() == 'q':
+            return False
         
         try:
             value = cast_type(value)
@@ -164,7 +167,7 @@ def parse_date(date_str):
     
     except ValueError:
         print("Invalid date format. Please use DD/MM/YYYY.")
-        return None
+        return False
        
 
 
@@ -287,7 +290,7 @@ class BookList:
         
         if not user_exists:
             print("User with those details does not exist. Please try again.")
-            return False
+            return None
 
         book_found = False
         
@@ -370,7 +373,7 @@ class UserList:
         for user in data['Users']:
             if username == user['username']:
                 print("A user with that username already exists")
-                return False
+                return None
             
         
         firstname = get_input_string("Enter first name: ")
@@ -384,7 +387,7 @@ class UserList:
         
         if not dob:
             print("Invalid date format. User not added.")
-            return False
+            return None
 
 
         user = User(username, firstname, surname, housenumber, streetname, postcode, email, dob)
