@@ -218,8 +218,12 @@ class BookList:
         new_book = False
         
         book_title_input = get_input_string("Book title: ").lower().strip()
-        book_author_input = get_input_string("Author full name:  ").lower().strip() 
-
+        book_author_input = get_input_string("Author full name:  ").lower().strip()
+        book_year_input = get_input_int("Book year: ", is_valid_pub_year)
+        book_publisher_input = get_input_string("Publisher: ")
+        book_available_copies_input = get_input_int("Available copies: ", is_digit)
+        book_publication_date_input = get_input_string("Publication date in DD/MM/YYYY format: ", parse_date)
+        
 
 
 # The method below is for finding a book within data['Books'] by title entered by the end user. It checks if the book exists and if it does it appends that to a list matched books which is returned by the method. Otherwise, it will alert the user that a book with that title does not exist.
@@ -397,15 +401,9 @@ class UserList:
         streetname = get_input_string("Enter street name: ")
         postcode = get_input_int("Enter postcode: ")
         email = get_input_string("Enter email address: ", is_valid_email)
-        dob_str = get_input_string("Enter date of birth (DD/MM/YYYY): ")
-        dob = parse_date(dob_str)
+        dob_str = get_input_string("Enter date of birth (DD/MM/YYYY): ", parse_date)
         
-        if not dob:
-            print("Invalid date format. User not added.")
-            return None
-
-
-        user = User(username, firstname, surname, housenumber, streetname, postcode, email, dob)
+        user = User(username, firstname, surname, housenumber, streetname, postcode, email, dob_str)
         user_dict = user.user_to_dict()
 
         data['Users'].append(user_dict)
