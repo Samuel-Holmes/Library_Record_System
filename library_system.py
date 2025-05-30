@@ -267,14 +267,7 @@ class BookList:
                     
                     print(f"Book has been borrowed successfully and is due on: {due_date}")
 
-                    try: 
-                        with open("data.json", "w") as f:
-                            json.dump(data, f, indent=2)
-                    
-                    except IOError:
-                        print("Error saving data to file")
-
-                    return
+                    save()
 
         if not book_found:
             print("Book with those details was not found. Please try again. If you are holding a Physical copy of the book then available copies need updating before this transaction can proceed, there is an error in the inventory list.")
@@ -320,22 +313,11 @@ class BookList:
                 
                 user_data['borrowed_books'] = new_borrowing_user_record
 
+                save()
                 
-                try: 
-                    with open("data.json", "w") as f:
-                        json.dump(data, f, indent=2)
-                    
-                except IOError:
-                    print("Error saving data to file")
-
-                
-                print("Book returned successfully.")
-                return True 
-
-
         if not book_found:
             print("Book with that ID was not found please try again.")
-            return False
+            
 
 
 # User class
@@ -410,15 +392,7 @@ class UserList:
 
         data['Users'].append(user_dict)
 
-        try:
-            with open("data.json", "w") as f:
-                json.dump(data, f, indent=2)
-        
-        except IOError:
-            print("User data could not be written to storage")
-
-        print("User added successfully")
-        return True
+        save()
 
     
 # The method below allows for an upate of user details.     
@@ -451,27 +425,18 @@ class UserList:
         if dob:
             user_data['dateofbirth'] = dob
             
-        try:
-            with open("data.json", "w") as f:
-                json.dump(data, f, indent=2)
+        save()   
 
-        except IOError:
-            print("Details could not be written to storage")
-            retry_save = get_input_string("Would you like to try saving these details again? (yes/no)").lower()
-
-            if retry_save == "yes":
-                try:
-                    with open("data.json", "w") as f:
-                    json.dump(data, f, indent=2)
-
-                except IOerror:
+# The method below allows for the listing of all users
+    
+    @classmethod
+    def list_users(cls):
+        for user in data['Users']:
+            print(f"Username: {user['username']}, User first and last name: {user['firstname']} {user['lastname']}")
 
 
 
-        print('User added successfully')   
-
-    def list_users(self):
-        pass
+        
 
 
 
