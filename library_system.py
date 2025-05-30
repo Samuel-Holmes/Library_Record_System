@@ -1,3 +1,7 @@
+
+
+
+
 """
 USERLIST AND BOOKLIST
 
@@ -446,4 +450,26 @@ class UserList:
 # Main Loop 
 
 def run_system():
-    pass
+    
+    while True:
+        
+        print("\n1. Add a book to collection")
+        print("2. Borrow a book")
+        print("3. Return a book")
+        print("4. Find a book by title")
+        print("5. List all books")
+        print("6. Add a user")
+        print("7. Update user details")
+        print("8. List all users")
+        print(" ")
+        
+        choice = input("Please choose from the following options and enter a valid selection 1-8. Alternatively submit 'q' to exit the system: ")
+
+        if choice == 'q':
+            break
+
+
+
+
+
+run_system()
