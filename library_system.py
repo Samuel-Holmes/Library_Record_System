@@ -211,6 +211,17 @@ class Book:
 
 class BookList:
 
+# The method below is for adding a book to the collection.
+
+    @classmethod
+    def add_book_to_collection(cls):
+        new_book = False
+        
+        book_title_input = get_input_string("Book title: ").lower().strip()
+        book_author_input = get_input_string("Author full name:  ").lower().strip() 
+
+
+
 # The method below is for finding a book within data['Books'] by title entered by the end user. It checks if the book exists and if it does it appends that to a list matched books which is returned by the method. Otherwise, it will alert the user that a book with that title does not exist.
 
     @classmethod    
@@ -467,6 +478,11 @@ def run_system():
 
         if choice == 'q':
             break
+
+        elif choice == 1:
+
+
+
 
 
 
