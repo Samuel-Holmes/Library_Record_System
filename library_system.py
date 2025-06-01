@@ -239,9 +239,10 @@ class BookList:
                     book_details = None
                     book_details_dictionary = None
 
-                else:
-                    save()
-                    print("Book added to collection successfully.")
+            
+            data['Books'].append(book_details_dictionary)
+            save()
+            print("Book added to collection successfully.")
 
 # The method below is for finding a book within data['Books'] by title entered by the end user. It checks if the book exists and if it does it appends that to a list matched books which is returned by the method. Otherwise, it will alert the user that a book with that title does not exist.
 
@@ -471,6 +472,7 @@ class UserList:
 
 
 # Main Loop 
+
 """
 
 def run_system():
@@ -487,17 +489,10 @@ def run_system():
         print("8. List all users")
         print(" ")
         
-        choice = input("Please choose from the following options and enter a valid selection 1-8. Alternatively submit 'q' to exit the system: ")
+        choice = input("Please choose from the following options and enter a valid selection 1-8. Alternatively submit 'q' to exit the system: ").strip()
 
         if choice == 'q':
             break
-
-        elif choice == 1:
-
-
-
-
-
 
 
 
