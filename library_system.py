@@ -499,7 +499,10 @@ def run_system():
         elif choice == '2':
             BookList.borrow_book()
 
-
+        elif choice == '6':
+            UserList.add_user()
 
 run_system()
+
+
 
