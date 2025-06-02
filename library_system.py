@@ -496,6 +496,9 @@ def run_system():
         elif choice == '1':
             BookList.add_book_to_collection()
 
+        elif choice == '2':
+            BookList.borrow_book()
+
 
 
 run_system()
