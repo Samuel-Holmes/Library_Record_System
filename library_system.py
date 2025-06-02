@@ -204,7 +204,7 @@ class BookList:
 
     @classmethod
     def add_book_to_collection(cls):
-        new_book = False
+        
         
         book_title_input = get_input_string("Book title: ")
         book_author_input = get_input_string("Author full name:  ")
@@ -233,16 +233,15 @@ class BookList:
                     and book_details_dictionary['year'].lower().strip() == book['year'].lower().strip() 
                     and book_details_dictionary['publisher'].lower().strip() == book['publisher'].lower().strip() 
                     and book_details_dictionary['publicationDate'].strip() == book['publicationDate'].strip()
-                ):
-                    
-                    print("Book with those details was already found in the collection. \nPlease use update book available copies menu choice and add extra copies.")
-                    book_details = None
-                    book_details_dictionary = None
+                    ):
+                        print("Book with those details was already found in the collection. \nPlease use update book available copies menu choice and add extra copies.")
+                        book_details = None
+                        book_details_dictionary = None
 
-            
-        data['Books'].append(book_details_dictionary)
-        save()
-        print("Book added to collection successfully.")
+
+            data['Books'].append(book_details_dictionary)
+            save()
+            print("Book added to collection successfully.")
 
 # The method below is for finding a book within data['Books'] by title entered by the end user. It checks if the book exists and if it does it appends that to a list matched books which is returned by the method. Otherwise, it will alert the user that a book with that title does not exist.
 
