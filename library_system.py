@@ -270,49 +270,79 @@ class BookList:
 
 # This method allows for the borrowing of books, it checks both the user exists and the book exists in the collection before it can be borrowed. It then decrements the available copies appropriately, updates the books borrowed by and users borrowed books attributes appropriately.
 
-    @classmethod 
+    @classmethod
     def borrow_book(cls):
         username = input("What is the name of the user that would like to borrow a book?: ")
         book_title = input("What is the title of the book the user would like to borrow?: ")
         matched_books = []
-        user_exists = False
         user_data = None
 
         for user in data['Users']:
             
             if user['username'] == username:
-                user_exists = True
                 user_data = user
                 break
-        
-        if not user_exists:
-            
-            print("User with those details does not exist. Please try again")
+
+        if not user_data:
+            print("User with those details does not exist. Please try again.")
             return
+
         
-        
-        book_found = False
         for book in data['Books']:
             
             if book['title'].lower().strip() == book_title.lower().strip():
-                
-                book_found = True
                 matched_books.append(book)
-                
-                if book['availableCopies'] > 0:
-                    due_date = datetime.now() + timedelta(days=14)
-                    due_date = due_date.strftime("%d/%m/%Y")
-                    book['availableCopies'] -= 1
 
-                    book['borrowed_by'].append({"username": username, "due_date": due_date})
-                    user_data['borrowed_books'].append({"bookID": book_id, "title": book['title'], "due_date": due_date})
+        if not matched_books:
+            
+            print("Book with those details was not found. Please try again.")
+            return
+
+        if len(matched_books) > 1:
+            
+            counter = 1
+            
+            for item in matched_books:
+                print(f"{counter}. {item}")
+                counter += 1
+
+            while True:
+                try:
                     
-                    print(f"Book has been borrowed successfully and is due on: {due_date}")
+                    book_choice = int(input(f"Which book would the user like to borrow? Enter a number (1-{len(matched_books)}): "))
+                    
+                    if 1 <= book_choice <= len(matched_books):
+                        book_data = matched_books[book_choice - 1]
+                        break
+                    
+                    else:
+                        print("Invalid choice. Please enter a valid number.")
+                
+                except ValueError:
+                    print("Please enter a numeric value.")
 
-                    save()
+        else:
+            book_data = matched_books[0]
 
-        if not book_found:
-            print("Book with those details was not found. Please try again. If you are holding a physical copy of the book then available copies need updating before this transaction can proceed, there is an error in the inventory list.")
+        
+        if book_data['availableCopies'] > 0:
+            due_date = datetime.now() + timedelta(days=14)
+            due_date = due_date.strftime("%d/%m/%Y")
+            book_data['availableCopies'] -= 1
+
+            book_data['borrowed_by'].append({"username": username, "due_date": due_date})
+            user_data['borrowed_books'].append({
+                "bookID": book_data.get('bookID'), 
+                "title": book_data['title'], 
+                "due_date": due_date
+            })
+
+            print(f"Book has been borrowed successfully and is due on: {due_date}")
+            save()  
+
+        else:
+            print("No available copies of this book at the moment. Please check back later.")
+
 
 
 # This method allows for book returns, again it checks that both the user and book objects exist. It then appropriately updates the neccessary attributes and increments available copies.   
