@@ -1,7 +1,7 @@
 """
 create a method to update available copies of a book by book ID
 
-from there look at developing the main loop further
+Look at the borrow book method in the BookList class methods, it needs to check if the book exists ideally append them to the matched books array if the length of the array is more than one librarian should be given the book details and choose which one matches the book to be borrowed. 
 
 
 """
@@ -271,8 +271,10 @@ class BookList:
 # This method allows for the borrowing of books, it checks both the user exists and the book exists in the collection before it can be borrowed. It then decrements the available copies appropriately, updates the books borrowed by and users borrowed books attributes appropriately.
 
     @classmethod 
-    def borrow_book(cls,book_id, username):
-        
+    def borrow_book(cls):
+        username = input("What is the name of the user that would like to borrow a book?: ")
+        book_title = input("What is the title of the book the user would like to borrow?: ")
+        matched_books = []
         user_exists = False
         user_data = None
 
@@ -292,9 +294,10 @@ class BookList:
         book_found = False
         for book in data['Books']:
             
-            if book['bookID'] == book_id:
+            if book['title'].lower().strip() == book_title.lower().strip():
                 
                 book_found = True
+                matched_books.append(book)
                 
                 if book['availableCopies'] > 0:
                     due_date = datetime.now() + timedelta(days=14)
@@ -416,7 +419,7 @@ class UserList:
         surname = get_input_string("Enter surname: ")
         housenumber = get_input_int("Enter house number: ")
         streetname = get_input_string("Enter street name: ")
-        postcode = get_input_int("Enter postcode: ")
+        postcode = get_input_string("Enter postcode: ")
         email = get_input_string("Enter email address: ", is_valid_email)
         dob_str = get_input_string("Enter date of birth (DD/MM/YYYY): ", parse_date)
         
@@ -450,7 +453,7 @@ class UserList:
         user_data['surname'] = get_input_string("Enter surname: ")
         user_data['housenumber'] = get_input_int("Enter house number: ")
         user_data['streetname'] = get_input_string("Enter street name: ")
-        user_data['postcode'] = get_input_int("Enter postcode: ")
+        user_data['postcode'] = get_input_string("Enter postcode: ")
         user_data['email'] = get_input_string("Enter email address: ", is_valid_email)
         user_data['dateofbirth'] = get_input_string("Enter date of birth (DD/MM/YYYY): ", parse_date)
         
@@ -501,6 +504,11 @@ def run_system():
 
         elif choice == '6':
             UserList.add_user()
+
+
+
+
+
 
 run_system()
 
