@@ -269,16 +269,15 @@ class BookList:
             print(book)
 
 # This method allows for the borrowing of books, it checks both the user exists and the book exists in the collection before it can be borrowed. It then decrements the available copies appropriately, updates the books borrowed by and users borrowed books attributes appropriately.
-
+    
     @classmethod
     def borrow_book(cls):
-        username = input("What is the name of the user that would like to borrow a book?: ")
+        username = input("What is the username of the user that would like to borrow a book?: ")
         book_title = input("What is the title of the book the user would like to borrow?: ")
         matched_books = []
         user_data = None
 
         for user in data['Users']:
-            
             if user['username'] == username:
                 user_data = user
                 break
@@ -287,61 +286,72 @@ class BookList:
             print("User with those details does not exist. Please try again.")
             return
 
-        
         for book in data['Books']:
-            
             if book['title'].lower().strip() == book_title.lower().strip():
                 matched_books.append(book)
 
         if not matched_books:
-            
             print("Book with those details was not found. Please try again.")
             return
 
         if len(matched_books) > 1:
-            
             counter = 1
-            
             for item in matched_books:
                 print(f"{counter}. {item}")
                 counter += 1
 
             while True:
                 try:
-                    
                     book_choice = int(input(f"Which book would the user like to borrow? Enter a number (1-{len(matched_books)}): "))
-                    
                     if 1 <= book_choice <= len(matched_books):
                         book_data = matched_books[book_choice - 1]
                         break
-                    
                     else:
                         print("Invalid choice. Please enter a valid number.")
-                
                 except ValueError:
                     print("Please enter a numeric value.")
-
         else:
             book_data = matched_books[0]
 
         
-        if book_data['availableCopies'] > 0:
-            due_date = datetime.now() + timedelta(days=14)
-            due_date = due_date.strftime("%d/%m/%Y")
-            book_data['availableCopies'] -= 1
+        already_borrowed = None
+        
+        for item in user_data['borrowed_books']:
+            if book_data['bookID'] == item['bookID']:
+                already_borrowed = item
+                break
 
-            book_data['borrowed_by'].append({"username": username, "due_date": due_date})
-            user_data['borrowed_books'].append({
-                "bookID": book_data.get('bookID'), 
-                "title": book_data['title'], 
-                "due_date": due_date
-            })
-
-            print(f"Book has been borrowed successfully and is due on: {due_date}")
-            save()  
-
+        
+        if already_borrowed:
+            print("This book is already being borrowed by the user. Their due date has been extended by 14 days.")
+            extended_due_date = datetime.strptime(already_borrowed['due_date'], "%d/%m/%Y") + timedelta(days=14)
+            formatted_extended_due_date = datetime.strftime(extended_due_date, "%d/%m/%Y")
+            already_borrowed['due_date'] = formatted_extended_due_date
+            
+            for borrowed_record in book_data['borrowed_by']:
+                if borrowed_record['username'] == user_data['username']:
+                    borrowed_record['due_date'] = formatted_extended_due_date
+                    break
+            
+            save()
+        
         else:
-            print("No available copies of this book at the moment. Please check back later.")
+            if book_data['availableCopies'] > 0:
+                due_date = (datetime.now() + timedelta(days=14)).strftime("%d/%m/%Y")
+                book_data['availableCopies'] -= 1
+
+                book_data['borrowed_by'].append({"username": username, "due_date": due_date})
+                user_data['borrowed_books'].append({
+                    "bookID": book_data.get('bookID'), 
+                    "title": book_data['title'], 
+                    "due_date": due_date
+                })
+
+                print(f"Book has been borrowed successfully and is due on: {due_date}")
+                save()
+            else:
+                print("No available copies of this book at the moment. Please check back later.")
+                return
 
 
 
