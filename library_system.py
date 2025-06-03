@@ -542,13 +542,26 @@ def run_system():
         elif choice == '2':
             BookList.borrow_book()
 
+        elif choice == '3':
+            BookList.return_book()
+
+        elif choice == '4':
+            BookList.find_book_by_title()
+
+        elif choice == '5':
+            BookList.list_all_books()
+
         elif choice == '6':
             UserList.add_user()
+        
+        elif choice == '7':
+            UserList.update_user_details()
 
+        elif choice == '8':
+            UserList.list_users()
 
-
-
-
+    print("Exiting system...")
+    
 
 run_system()
 
