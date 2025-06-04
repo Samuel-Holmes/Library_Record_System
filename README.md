@@ -42,7 +42,7 @@ This structure allows the application to track books and users between sessions.
 2. This programme uses standard libraries so no further packages are required 
 3. Clone this repository or download the files 
 4. Open your command line or terminal and navigate to the file where the project is located
-5. Run the command bash ```python library_system.py```
+5. Run the command ```python library_system.py```
 
 
 
