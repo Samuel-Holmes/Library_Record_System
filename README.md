@@ -1,9 +1,9 @@
-#Library Management System
+# Library Management System
 
 This is a simple command-line-based Library Management System written in Python. It allows librarians to manage book collections and user accounts, handling operations such as borrowing, returning, and updating records. The system stores all persistent data in a `data.json` file.
 
 
-##Features
+## Features
 
 - 📚 **Book Management**
   - Add new books with metadata and available copy counts.
@@ -24,7 +24,7 @@ This is a simple command-line-based Library Management System written in Python.
   - Track which user borrowed which book and their due dates.
 
 
-##Data Storage
+## Data Storage
 
 All data is stored persistently in a JSON file:
 
@@ -33,20 +33,20 @@ All data is stored persistently in a JSON file:
   "Books": [],
   "Users": []
 }
-
+```
 This structure allows the application to track books and users between sessions. The file is automatically updated as operations are performed within the system.
 
-##How to start the system
+## How to start the system
 
 1. Ensure you have Python 3 installed on your system
 2. This programme uses standard libraries so no further packages are required 
 3. Clone this repository or download the files 
 4. Open your command line or terminal and navigate to the file where the project is located
-5. Run the command 'python library_system.py'
+5. Run the command bash ```python library_system.py```
 
 
 
-##Working the system
+## Working the system
 
 You will be prompted with a menu that includes:
 
