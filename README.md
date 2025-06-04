@@ -1,9 +1,73 @@
-### System Design and Requirements
+#Library Management System
 
-I undertook this project in order to solidify my understanding of and gain practise in OOP within the Python programming language. I focused on attempting to replicate a useable system that mimicked a real world system so I could understand the necessary interactions and functionalities needed within a traditional system. The sys contains classes such as Books, BookList, Users and UserList they have the following uses:
+This is a simple command-line-based Library Management System written in Python. It allows librarians to manage book collections and user accounts, handling operations such as borrowing, returning, and updating records. The system stores all persistent data in a `data.json` file.
 
-* Books: This class allows for the instantiation of book objects within the programme. During construction they are assigned user inputted attributes such as title, author, publication date etc. In addition there is a method for converting the object to a dictionary for storage in the json file.
 
-* BookList: This class can be viewed as the library collection itself. Rather than being instances of objects it simply contains methods that can be used to interact with the book objects such as adding a book to the collection, borrowing a book, returning a book etc. 
+##Features
 
-* Users: This class is for instantiating user objects. With attributes such as username, user email, first name, last name etc.
+- 📚 **Book Management**
+  - Add new books with metadata and available copy counts.
+  - Search for books by title.
+  - List all books in the collection.
+  - Automatically prevents duplicate entries based on detailed metadata.
+  - Tracks borrowing history and due dates.
+
+- 👥 **User Management**
+  - Add new users with validated personal details.
+  - Update existing user details.
+  - List all registered users.
+
+- **Borrowing and Returning**
+  - Borrow books by available copies.
+  - Extend due date if a user tries to re-borrow the same book.
+  - Return borrowed books and update availability.
+  - Track which user borrowed which book and their due dates.
+
+
+##Data Storage
+
+All data is stored persistently in a JSON file:
+
+```json
+{
+  "Books": [],
+  "Users": []
+}
+
+This structure allows the application to track books and users between sessions. The file is automatically updated as operations are performed within the system.
+
+##How to start the system
+
+1. Ensure you have Python 3 installed on your system
+2. This programme uses standard libraries so no further packages are required 
+3. Clone this repository or download the files 
+4. Open your command line or terminal and navigate to the file where the project is located
+5. Run the command 'python library_system.py'
+
+
+
+##Working the system
+
+You will be prompted with a menu that includes:
+
+Add a book
+
+Borrow a book
+
+Return a book
+
+Find a book by title
+
+List all books
+
+Add a user
+
+Update user details
+
+List all users
+
+Type the corresponding number to perform an action, or type 'q' to exit.
+
+
+
+
